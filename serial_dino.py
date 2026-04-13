@@ -1,23 +1,17 @@
 import random
 import sys
-
 import pygame
-
 pygame.init()
-
 WIDTH, HEIGHT = 980, 360
 GROUND_Y = 290
 FPS = 60
-
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Dino Runner - Polished Edition")
 clock = pygame.time.Clock()
-
 title_font = pygame.font.SysFont("arial", 60, bold=True)
 font = pygame.font.SysFont("arial", 30, bold=True)
 small_font = pygame.font.SysFont("arial", 22)
 
-# Palette
 SKY_TOP = (160, 215, 255)
 SKY_BOTTOM = (236, 247, 255)
 SUN = (255, 214, 112)
@@ -31,7 +25,6 @@ GREEN = (44, 149, 72)
 RED = (198, 69, 69)
 HUD_BG = (255, 255, 255, 170)
 
-
 def vertical_gradient(surface, top_color, bottom_color):
     """Draw a soft sky gradient."""
     for y in range(HEIGHT):
@@ -42,7 +35,6 @@ def vertical_gradient(surface, top_color, bottom_color):
             int(top_color[2] + (bottom_color[2] - top_color[2]) * blend),
         )
         pygame.draw.line(surface, color, (0, y), (WIDTH, y))
-
 
 class Dino:
     def __init__(self):
@@ -114,7 +106,6 @@ class Dino:
             pygame.draw.rect(surf, BLACK, leg2, border_radius=3)
             pygame.draw.circle(surf, WHITE, (self.x + 66, self.y + 10), 2)
 
-
 class Obstacle:
     def __init__(self, speed):
         self.x = WIDTH + random.randint(30, 120)
@@ -181,7 +172,7 @@ class Background:
         vertical_gradient(surf, SKY_TOP, SKY_BOTTOM)
         pygame.draw.circle(surf, SUN, (WIDTH - 130, 74), 33)
 
-        # Static mountain layers (clean and stable).
+        #mountains 
         pygame.draw.polygon(surf, MOUNTAIN_LIGHT, self.far_mountains)
         pygame.draw.polygon(surf, MOUNTAIN_DARK, self.near_mountains)
 
@@ -285,7 +276,6 @@ def game():
         if spawn_timer >= spawn_gap:
             obstacles.append(Obstacle(speed))
             spawn_timer = 0
-            # Spawn spacing adapts with speed for smoother difficulty scaling.
             spawn_gap = random.randint(max(48, int(88 - speed * 2)), max(76, int(126 - speed)))
 
         dino_box = dino.hitbox()
